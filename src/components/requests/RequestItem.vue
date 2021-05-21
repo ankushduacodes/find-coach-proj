@@ -1,14 +1,12 @@
 <template>
-<!--<a data-bs-toggle="modal"-->
-<!--   data-bs-target="#RequestModal" @click="fillRequestId(request.id)">-->
-  <a @click="fillRequestId(request.id)">
+  <router-link :to="RequestPerIDUrl">
     <request-card>
       <li>
         <h5>By: {{request.name}}</h5>
         <p>To: {{request.to}}</p>
       </li>
     </request-card>
-  </a>
+  </router-link>
 </template>
 
 <script>
@@ -22,11 +20,10 @@ export default {
   props: {
     request: Object,
   },
-  inject: ['fillRequestId'],
-  data() {
-    return {
-      showModal: false,
-    };
+  computed: {
+    RequestPerIDUrl() {
+      return { name: 'RequestPerID', params: { id: this.request.id } };
+    },
   },
 };
 </script>

@@ -9,27 +9,20 @@
       </transition>
     </router-view>
   </div>
-  <request-modal v-if="request" :request="request" :show="show"></request-modal>
 </template>
 
 <script>
 import '@fontsource/open-sans';
 import NavBar from '@/components/NavBar.vue';
-import RequestModal from '@/components/requests/RequestModal.vue';
 
 const { enterHandler, leaveHandler } = require('@/animations/routeAnimationHandler');
 
 export default {
-  components: { NavBar, RequestModal },
+  components: { NavBar },
   data() {
     return {
       requestId: null,
       show: false,
-    };
-  },
-  provide() {
-    return {
-      fillRequestId: this.fillRequestId,
     };
   },
   methods: {
@@ -38,19 +31,6 @@ export default {
     },
     leaveRouteHandler(el, done) {
       leaveHandler(el, done);
-    },
-    fillRequestId(requestId) {
-      this.requestId = requestId;
-      this.show = 'show';
-    },
-  },
-  computed: {
-    request() {
-      if (this.requestId) {
-        const { getters } = this.$store;
-        return getters.['requests/getRequestById']({ id: this.requestId });
-      }
-      return null;
     },
   },
 };
