@@ -15,13 +15,11 @@
 <script>
 import RequestCard from '@/components/requests/RequestCard.vue';
 import RequestModal from '@/components/requests/RequestModal.vue';
-// import RequestModal from '@/views/requests/RequestModal.vue';
 
 export default {
   name: 'RequestItem',
   components: {
     RequestModal,
-    // RequestModal,
     RequestCard,
   },
   props: {

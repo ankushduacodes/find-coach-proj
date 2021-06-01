@@ -25,7 +25,6 @@
 </template>
 
 <script>
-// TODO: Figure out why is backdrop infront of the whole app
 export default {
   name: 'RequestModal',
   props: {
@@ -33,13 +32,6 @@ export default {
       type: Object,
       required: true,
     },
-  },
-  computed: {
-    // request() {
-    //   console.log(this.requestId);
-    //   const { getters } = this.$store;
-    //   return getters.['requests/getRequestById']({ id: this.requestId });
-    // },
   },
 };
 </script>
