@@ -19,12 +19,6 @@ const { enterHandler, leaveHandler } = require('@/animations/routeAnimationHandl
 
 export default {
   components: { NavBar },
-  data() {
-    return {
-      requestId: null,
-      show: false,
-    };
-  },
   methods: {
     enterRouteHandler(el, done) {
       enterHandler(el, done);
