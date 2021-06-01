@@ -1,6 +1,6 @@
 <template>
   <teleport to="#app">
-    <div class="modal fade"
+    <div class="modal fade custom-modal"
          :id="'RequestModal'+request.id" tabindex="-1"
          aria-labelledby="RequestModalLabel" aria-hidden="false">
       <div class="modal-dialog" role="document">
@@ -12,7 +12,11 @@
           </div>
           <div class="modal-body">
             <h4>To: {{ request?.to }}</h4>
-            <p>{{ request?.message }}</p>
+            <div class="form-group">
+              <label for="FormControlTextarea1"><b>Message:</b></label>
+              <textarea class="form-control" :value="request.message"
+                        id="FormControlTextarea1" rows="3" readonly></textarea>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -37,8 +41,11 @@ export default {
 </script>
 
 <style scoped>
-p {
-  border: 1px solid gray;
-  padding: 10px;
+h4 {
+  margin-bottom: 15px;
+}
+
+.custom-modal {
+  text-align: left;
 }
 </style>

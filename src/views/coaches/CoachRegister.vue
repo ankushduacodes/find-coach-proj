@@ -11,7 +11,6 @@
             id="first-name"
             placeholder="Enter First Name"
             v-model="firstName"
-            required
           >
           <span class="invalid-feedback">First name must be of at-least 2 letters</span>
         </div>
@@ -23,7 +22,6 @@
             id="last-name"
             placeholder="Enter Last Name"
             v-model="lastName"
-            required
           >
           <span class="invalid-feedback">Last name must be of at-least 2 letters</span>
         </div>
@@ -35,7 +33,6 @@
             id="email"
             placeholder="Enter Email"
             v-model="email"
-            required
           >
           <span class="invalid-feedback">Please enter a valid email</span>
         </div>
@@ -47,7 +44,6 @@
             id="phone"
             placeholder="Enter Phone number"
             v-model="phoneNumber"
-            required
           >
           <span class="invalid-feedback">Please enter a valid phone number</span>
         </div>
@@ -86,7 +82,9 @@
           v-if="false"
           class="check-btn-feedback"
         >Please select at least one of the above options</span>
-        <button @click="log" type="submit" class="btn btn-primary">Submit</button>
+        <div class="flex-button">
+          <button @click="log" type="submit" class="btn btn-primary">Submit</button>
+        </div>
       </form>
     </fieldset>
   </base-card>
@@ -109,8 +107,19 @@ export default {
     };
   },
   methods: {
+    resetInput() {
+      this.firstName = '';
+      this.lastName = '';
+      this.email = '';
+      this.phoneNumber = '';
+      this.expertise = [];
+    },
+    // TODO add validations to the data being entered and data cannot be empty
+    // TODO redirect on submit
+    // TODO (use toast to inform that data was submitted and show a timer before redirecting)
     log() {
       console.log(this.firstName, this.lastName, this.email, this.phoneNumber, this.expertise);
+      this.resetInput();
     },
   },
 };
@@ -138,6 +147,11 @@ label {
 button {
   display: block;
   margin-top: 20px;
+}
+
+.flex-button {
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 </style>

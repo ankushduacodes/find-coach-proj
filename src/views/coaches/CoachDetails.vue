@@ -45,7 +45,7 @@ export default {
     },
 
     ContactUrl() {
-      return { name: 'CoachPerID', params: { id: this.foundCoach.id } };
+      return { name: 'CoachContact', params: { id: this.foundCoach.id } };
     },
   },
 };
