@@ -1,17 +1,24 @@
 <template>
   <base-card>
     <fieldset>
-      <legend>Contact {{ coach.name }}</legend>
+      <legend><h2>Contact {{ coach.name }}</h2></legend>
       <template v-for="badge in coach.expertise" :key="badge" class="cus">
         <the-badge :badge-name="badge"></the-badge>
       </template>
-      <form @submit.prevent>
+      <form @submit.prevent="validateData">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" class="form-control" ref="name" id="name">
+          <span class="invalid-feedback">Name can not be empty</span>
+        </div>
         <div class="form-group">
           <label for="exampleFormControlTextarea1">Message</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          <textarea class="form-control" ref="message"
+                    id="exampleFormControlTextarea1" rows="3"></textarea>
+          <span class="invalid-feedback">Message box can not be empty</span>
         </div>
         <div class="flex-button">
-          <button @click="validateData" type="submit" class="btn btn-primary">Send</button>
+          <button type="submit" class="btn btn-primary">Send</button>
         </div>
       </form>
     </fieldset>
@@ -37,8 +44,37 @@ export default {
     },
   },
   methods: {
+    resetFormData() {
+      const { message, name } = this.$refs;
+      message.value = '';
+      name.value = '';
+    },
+    addRequest() {
+      // TODO send an add coach or coach request http request and on success
+      // TODO on success get the latest added coach or request and update our local state with it
+      const payload = {
+        id: Math.floor(Math.random() * 10000000000) + 100000,
+        name: this.$refs.name.value,
+        message: this.$refs.message.value,
+        to: this.id,
+      };
+      this.$store.dispatch('requests/addRequest', payload);
+      this.resetFormData();
+      this.$router.push({ name: 'Requests' });
+    },
     validateData() {
-
+      const { message, name } = this.$refs;
+      if (!message.value) {
+        message.classList.add('is-invalid');
+      } else {
+        message.classList.add('is-valid');
+      }
+      if (!name.value) {
+        name.classList.add('is-invalid');
+      } else {
+        name.classList.add('is-valid');
+      }
+      this.addRequest();
     },
   },
 };

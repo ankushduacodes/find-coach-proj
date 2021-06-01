@@ -5,7 +5,7 @@
     <request-card>
       <li>
         <h5>By: {{request.name}}</h5>
-        <p>To: {{request.to}}</p>
+        <p>To: {{requestTo}}</p>
       </li>
     </request-card>
   </a>
@@ -24,6 +24,11 @@ export default {
   },
   props: {
     request: Object,
+  },
+  computed: {
+    requestTo() {
+      return this.$store.getters.['coaches/getCoachById']({ id: this.request.to }).name;
+    },
   },
 };
 </script>

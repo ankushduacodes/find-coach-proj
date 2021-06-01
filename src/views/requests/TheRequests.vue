@@ -1,7 +1,9 @@
 <template>
   <base-card>
-    <request-list :requests="requests"></request-list>
+    <request-list v-if="requests.length" :requests="requests"></request-list>
+    <h1 v-else>Nothing to see here</h1>
   </base-card>
+
 </template>
 
 <script>

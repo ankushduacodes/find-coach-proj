@@ -6,12 +6,12 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="RequestModalLabel">Request by {{ request?.name }}</h5>
+            <h5 class="modal-title" id="RequestModalLabel">Request by {{ request.name }}</h5>
             <button type="button" class="btn-close"
                     data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <h4>To: {{ request?.to }}</h4>
+            <h4>To: {{ requestTo }}</h4>
             <div class="form-group">
               <label for="FormControlTextarea1"><b>Message:</b></label>
               <textarea class="form-control" :value="request.message"
@@ -35,6 +35,11 @@ export default {
     request: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    requestTo() {
+      return this.$store.getters.['coaches/getCoachById']({ id: this.request.to }).name;
     },
   },
 };
