@@ -1,7 +1,7 @@
 <template>
-<a data-bs-toggle="modal"
-   :data-bs-target="'#RequestModal' + request.id"
->
+  <a data-bs-toggle="modal"
+     :data-bs-target="'#RequestModal' + request.id"
+  >
     <request-card>
       <li>
         <h5>By: {{request.name}}</h5>
