@@ -1,7 +1,7 @@
 <template>
-<!--<a data-bs-toggle="modal"-->
-<!--   data-bs-target="#RequestModal" @click="fillRequestId(request.id)">-->
-  <a @click="fillRequestId(request.id)">
+<a data-bs-toggle="modal"
+   :data-bs-target="'#RequestModal' + request.id"
+>
     <request-card>
       <li>
         <h5>By: {{request.name}}</h5>
@@ -9,24 +9,23 @@
       </li>
     </request-card>
   </a>
+  <request-modal :request-id="request.id"></request-modal>
 </template>
 
 <script>
 import RequestCard from '@/components/requests/RequestCard.vue';
+import RequestModal from '@/components/requests/RequestModal.vue';
+// import RequestModal from '@/views/requests/RequestModal.vue';
 
 export default {
   name: 'RequestItem',
   components: {
+    RequestModal,
+    // RequestModal,
     RequestCard,
   },
   props: {
     request: Object,
-  },
-  inject: ['fillRequestId'],
-  data() {
-    return {
-      showModal: false,
-    };
   },
 };
 </script>

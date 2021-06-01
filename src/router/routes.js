@@ -32,10 +32,4 @@ export default [
     name: 'Requests',
     component: () => import('@/views/requests/TheRequests.vue'),
   },
-  // {
-  //   path: '/requests/:id',
-  //   name: 'RequestPerID',
-  //   component: () => import('@/views/requests/RequestModal.vue'),
-  //   props: true,
-  // },
 ];
