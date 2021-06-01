@@ -64,17 +64,22 @@ export default {
     },
     validateData() {
       const { message, name } = this.$refs;
+      let errorFound = false;
       if (!message.value) {
+        errorFound = true;
         message.classList.add('is-invalid');
       } else {
         message.classList.add('is-valid');
       }
       if (!name.value) {
+        errorFound = true;
         name.classList.add('is-invalid');
       } else {
         name.classList.add('is-valid');
       }
-      this.addRequest();
+      if (!errorFound) {
+        this.addRequest();
+      }
     },
   },
 };
@@ -88,5 +93,9 @@ export default {
 .flex-button {
   display: flex;
   flex-direction: row-reverse;
+}
+
+form {
+  margin-top: 20px;
 }
 </style>
