@@ -9,7 +9,7 @@
       </li>
     </request-card>
   </a>
-  <request-modal :request-id="request.id"></request-modal>
+  <request-modal :request="request"></request-modal>
 </template>
 
 <script>

@@ -1,7 +1,7 @@
 <template>
   <teleport to="#app">
     <div class="modal fade"
-         :id="'RequestModal'+requestId" tabindex="-1"
+         :id="'RequestModal'+request.id" tabindex="-1"
          aria-labelledby="RequestModalLabel" aria-hidden="false">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -20,7 +20,6 @@
           </div>
         </div>
       </div>
-      <h1>{{request}}</h1>
     </div>
   </teleport>
 </template>
@@ -30,16 +29,17 @@
 export default {
   name: 'RequestModal',
   props: {
-    requestId: {
+    request: {
+      type: Object,
       required: true,
     },
   },
   computed: {
-    request() {
-      console.log(this.requestId);
-      const { getters } = this.$store;
-      return getters.['requests/getRequestById']({ id: this.requestId });
-    },
+    // request() {
+    //   console.log(this.requestId);
+    //   const { getters } = this.$store;
+    //   return getters.['requests/getRequestById']({ id: this.requestId });
+    // },
   },
 };
 </script>
