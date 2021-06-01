@@ -1,29 +1,29 @@
 <template>
-  <router-link :to="RequestPerIDUrl">
+  <a data-bs-toggle="modal"
+     :data-bs-target="'#RequestModal' + request.id"
+  >
     <request-card>
       <li>
         <h5>By: {{request.name}}</h5>
         <p>To: {{request.to}}</p>
       </li>
     </request-card>
-  </router-link>
+  </a>
+  <request-modal :request="request"></request-modal>
 </template>
 
 <script>
 import RequestCard from '@/components/requests/RequestCard.vue';
+import RequestModal from '@/components/requests/RequestModal.vue';
 
 export default {
   name: 'RequestItem',
   components: {
+    RequestModal,
     RequestCard,
   },
   props: {
     request: Object,
-  },
-  computed: {
-    RequestPerIDUrl() {
-      return { name: 'RequestPerID', params: { id: this.request.id } };
-    },
   },
 };
 </script>

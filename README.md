@@ -1,4 +1,4 @@
-# udemy-task
+# find-coach-proj
 
 ## Project setup
 ```
