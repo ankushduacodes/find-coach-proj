@@ -28,6 +28,7 @@
 <script>
 import BaseCard from '@/components/UI/BaseCard.vue';
 import TheBadge from '@/components/TheBadge.vue';
+import { useToast } from 'vue-toastification';
 
 export default {
   name: 'CoachContact',
@@ -58,9 +59,16 @@ export default {
         message: this.$refs.message.value,
         to: this.id,
       };
-      this.$store.dispatch('requests/addRequest', payload);
-      this.resetFormData();
-      this.$router.push({ name: 'Requests' });
+      try {
+        this.$store.dispatch('requests/addRequest', payload);
+        this.resetFormData();
+        const toast = useToast();
+        toast.success('Request Submitted Successfully');
+        this.$router.push({ name: 'Requests' });
+      } catch (err) {
+        // TODO add a toast on failure
+        console.log(err);
+      }
     },
     validateData() {
       const { message, name } = this.$refs;
