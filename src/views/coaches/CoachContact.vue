@@ -77,14 +77,12 @@ export default {
         errorFound = true;
         message.classList.add('is-invalid');
       } else {
-        message.classList.add('is-valid');
         message.classList.remove('is-invalid');
       }
       if (!name.value) {
         errorFound = true;
         name.classList.add('is-invalid');
       } else {
-        name.classList.add('is-valid');
         name.classList.remove('is-invalid');
       }
       if (!errorFound) {
