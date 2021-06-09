@@ -3,9 +3,7 @@
   <div class="container-md">
     <router-view v-slot="{ Component }">
       <transition @enter="enterRouteHandler" @leave="leaveRouteHandler" mode="out-in">
-        <keep-alive>
-          <component :is="Component"></component>
-        </keep-alive>
+        <component :is="Component"></component>
       </transition>
     </router-view>
   </div>
