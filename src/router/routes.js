@@ -1,4 +1,5 @@
 import TheCoaches from '@/views/coaches/TheCoaches.vue';
+import { beforeCoachRouteEnter } from '@/router/helper';
 
 export default [
   {
@@ -15,12 +16,14 @@ export default [
     name: 'CoachPerID',
     component: () => import('@/views/coaches/CoachDetails.vue'),
     props: true,
+    beforeEnter: beforeCoachRouteEnter,
   },
   {
     path: '/coaches/:id/contact',
     name: 'CoachContact',
     component: () => import('@/views/coaches/CoachContact.vue'),
     props: true,
+    beforeEnter: beforeCoachRouteEnter,
   },
   {
     path: '/coaches/register',
@@ -31,5 +34,10 @@ export default [
     path: '/requests',
     name: 'Requests',
     component: () => import('@/views/requests/TheRequests.vue'),
+  },
+  {
+    path: '/:catchAll(.*)',
+    name: 'NotFound',
+    component: () => import('@/views/errors/NotFound.vue'),
   },
 ];
