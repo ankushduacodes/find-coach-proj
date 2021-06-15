@@ -164,11 +164,11 @@ export default {
     }) {
       const payload = {
         id: Math.floor(Math.random() * 1000000000) + 1000,
-        name: `${firstName.value} ${lastName.value}`,
+        name: `${firstName.value.trim()} ${lastName.value.trim()}`,
         age: +age.value,
         contactInfo: {
-          email: email.value,
-          phone: phoneNumber.value,
+          email: email.value.trim(),
+          phone: phoneNumber.value.trim(),
         },
         expertise,
       };

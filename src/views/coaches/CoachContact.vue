@@ -55,8 +55,8 @@ export default {
       // TODO on success get the latest added coach or request and update our local state with it
       const payload = {
         id: Math.floor(Math.random() * 10000000000) + 100000,
-        name: this.$refs.name.value,
-        message: this.$refs.message.value,
+        name: this.$refs.name.value.trim(),
+        message: this.$refs.message.value.trim(),
         to: this.id,
       };
       try {
@@ -73,13 +73,13 @@ export default {
     validateData() {
       const { message, name } = this.$refs;
       let errorFound = false;
-      if (!message.value) {
+      if (!message.value.trim()) {
         errorFound = true;
         message.classList.add('is-invalid');
       } else {
         message.classList.remove('is-invalid');
       }
-      if (!name.value) {
+      if (!name.value.trim()) {
         errorFound = true;
         name.classList.add('is-invalid');
       } else {
