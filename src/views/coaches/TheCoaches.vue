@@ -1,6 +1,9 @@
 <template>
   <base-card>
-    <coach-list :coach-list="coachList"></coach-list>
+    <template v-if="coachList.length">
+      <coach-list :coach-list="coachList"></coach-list>
+    </template>
+    <h1 v-else>Nothing to see here</h1>
   </base-card>
 </template>
 

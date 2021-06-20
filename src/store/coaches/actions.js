@@ -13,10 +13,9 @@ export default {
     } catch (err) {
       const toast = useToast();
       toast.error('Something went wrong on the server');
-      console.log(err);
+      console.log(Object.entries(err));
     }
-    const payload = { coaches: coaches.data.coachList };
-    console.log('coaches', coaches);
+    const payload = { coachList: coaches.data.coachList };
     commit('SET_COACHES', payload);
   },
 };

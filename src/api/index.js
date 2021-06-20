@@ -18,7 +18,7 @@ function responseHandler(response) {
 
 function errorHandler(err) {
   console.log(err);
-  throw new Error(`Something went wrong on the server \n${err.response}`);
+  throw new Error('Something went wrong on the server');
 }
 
 api.interceptors.response.use(responseHandler, errorHandler);

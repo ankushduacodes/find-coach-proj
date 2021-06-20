@@ -1,6 +1,8 @@
 <template>
   <base-card>
-    <request-list v-if="requests.length" :requests="requests"></request-list>
+    <template v-if="requests.length">
+      <request-list :requests="requests"></request-list>
+    </template>
     <h1 v-else>Nothing to see here</h1>
   </base-card>
 

@@ -6,6 +6,6 @@ export default {
     coachList.push(payload);
   },
   [SET_COACHES](state, payload) {
-    state.coachList = payload.coaches;
+    state.coachList = payload.coachList;
   },
 };
