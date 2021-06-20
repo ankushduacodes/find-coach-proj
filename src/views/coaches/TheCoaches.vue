@@ -1,6 +1,7 @@
 <template>
   <base-card>
-    <template v-if="coachList.length">
+    <base-spinner v-if="isLoading"></base-spinner>
+    <template v-else-if="coachList.length">
       <coach-list :coach-list="coachList"></coach-list>
     </template>
     <h1 v-else>Nothing to see here</h1>
@@ -11,14 +12,28 @@
 import CoachList from '@/components/coaches/CoachList.vue';
 import BaseCard from '@/components/UI/BaseCard.vue';
 import { mapGetters } from 'vuex';
+import BaseSpinner from '@/components/UI/BaseSpinner.vue';
 
 export default {
   name: 'TheCoaches',
-  components: { BaseCard, CoachList },
+  components: { BaseSpinner, BaseCard, CoachList },
+  data() {
+    return {
+      isLoading: false,
+    };
+  },
   computed: {
     ...mapGetters({
       coachList: 'coaches/getAllCoaches',
     }),
+  },
+  async created() {
+    // TODO handle error where if server error occurs then spinner should stop
+    this.isLoading = true;
+    if (!this.$store.getters.['coaches/getAllCoaches'].length) {
+      await this.$store.dispatch('coaches/fetchCoaches');
+    }
+    this.isLoading = false;
   },
 };
 </script>
