@@ -44,7 +44,6 @@ export default {
   },
   data() {
     return {
-      requestSent: false,
       foundCoach: {},
       // TODO add error handling with error message as well as a toast
       isLoading: false,
@@ -56,6 +55,7 @@ export default {
   computed: {
     ...mapGetters({
       coachById: 'coaches/getCoachById',
+      tempCoachObj: 'coaches/getTempCoach',
     }),
 
     ContactUrl() {
@@ -64,12 +64,12 @@ export default {
   },
   async mounted() {
     const coachId = this.id;
-    this.foundCoach = this.coachById({ id: this.id }) || this.$store.getters.['coaches/tempCoachObj'];
+    this.foundCoach = this.coachById({ id: this.id }) || this.tempCoachObj;
     if (!this.foundCoach || !Object.entries(this.foundCoach).length) {
       try {
         this.isLoading = true;
         await this.$store.dispatch('coaches/fetchCoachById', { coachId });
-        this.foundCoach = this.$store.getters.['coaches/getTempCoach'];
+        this.foundCoach = this.tempCoachObj;
       } catch (err) {
         const toast = useToast();
         toast.error('Something went wrong on the server');

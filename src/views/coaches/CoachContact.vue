@@ -1,8 +1,9 @@
 <template>
   <base-card>
-    <fieldset>
-      <legend><h2>Contact {{ coach.name }}</h2></legend>
-      <template v-for="badge in coach.expertise" :key="badge" class="cus">
+    <base-spinner v-if="isLoading"></base-spinner>
+    <fieldset v-else-if="!isLoading && Object.keys(foundCoach).length">
+      <legend><h2>Contact {{ foundCoach.name }}</h2></legend>
+      <template v-for="badge in foundCoach.expertise" :key="badge" class="cus">
         <the-badge :badge-name="badge"></the-badge>
       </template>
       <form @submit.prevent="validateData">
@@ -22,6 +23,7 @@
         </div>
       </form>
     </fieldset>
+    <h1 v-else>Nothing to see</h1>
   </base-card>
 </template>
 
@@ -29,20 +31,30 @@
 import BaseCard from '@/components/UI/BaseCard.vue';
 import TheBadge from '@/components/TheBadge.vue';
 import { useToast } from 'vue-toastification';
+import { mapGetters } from 'vuex';
+import BaseSpinner from '@/components/UI/BaseSpinner.vue';
 
 export default {
   name: 'CoachContact',
   components: {
+    BaseSpinner,
     TheBadge,
     BaseCard,
   },
   props: {
     id: String,
   },
+  data() {
+    return {
+      foundCoach: {},
+      isLoading: false,
+    };
+  },
   computed: {
-    coach() {
-      return this.$store.getters.['coaches/getCoachById']({ id: this.id });
-    },
+    ...mapGetters({
+      coachById: 'coaches/getCoachById',
+      tempCoachObj: 'coaches/getTempCoach',
+    }),
   },
   methods: {
     resetFormData() {
@@ -89,6 +101,23 @@ export default {
         this.addRequest();
       }
     },
+  },
+  async mounted() {
+    const coachId = this.id;
+    this.foundCoach = this.coachById({ id: this.id }) || this.tempCoachObj;
+    if (!this.foundCoach || !Object.entries(this.foundCoach).length) {
+      try {
+        this.isLoading = true;
+        await this.$store.dispatch('coaches/fetchCoachById', { coachId });
+        this.foundCoach = this.tempCoachObj;
+      } catch (err) {
+        const toast = useToast();
+        toast.error('Something went wrong on the server');
+        this.foundCoach = {};
+      } finally {
+        this.isLoading = false;
+      }
+    }
   },
 };
 </script>
