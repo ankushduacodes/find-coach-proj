@@ -14,30 +14,30 @@ export default [
   {
     path: '/coaches/:id',
     name: 'CoachPerID',
-    component: () => import('@/views/coaches/CoachDetails.vue'),
+    component: () => import(/* webpackChunkName: "CoachPerId" */ '@/views/coaches/CoachDetails.vue'),
     props: true,
     // beforeEnter: beforeCoachRouteEnter,
   },
   {
     path: '/coaches/:id/contact',
     name: 'CoachContact',
-    component: () => import('@/views/coaches/CoachContact.vue'),
+    component: () => import(/* webpackChunkName: "contact" */ '@/views/coaches/CoachContact.vue'),
     props: true,
     // beforeEnter: beforeCoachRouteEnter,
   },
   {
     path: '/coaches/register',
     name: 'CoachRegister',
-    component: () => import('@/views/coaches/CoachRegister.vue'),
+    component: () => import(/* webpackChunkName: "register" */ '@/views/coaches/CoachRegister.vue'),
   },
   {
     path: '/requests',
     name: 'Requests',
-    component: () => import('@/views/requests/TheRequests.vue'),
+    component: () => import(/* webpackChunkName: "request" */ '@/views/requests/TheRequests.vue'),
   },
   {
     path: '/:catchAll(.*)',
     name: 'NotFound',
-    component: () => import('@/views/errors/NotFound.vue'),
+    component: () => import(/* webpackChunkName: "notfound" */ '@/views/errors/NotFound.vue'),
   },
 ];
