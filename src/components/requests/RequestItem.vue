@@ -27,7 +27,7 @@ export default {
   },
   computed: {
     requestTo() {
-      return this.$store.getters.['coaches/getCoachById']({ id: this.request.to }).name;
+      return this.$store.getters.['coaches/getCoachById']({ id: this.request.coachId })?.name;
     },
   },
 };
