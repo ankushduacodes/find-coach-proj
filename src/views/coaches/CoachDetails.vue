@@ -27,19 +27,16 @@
 
 import { mapGetters } from 'vuex';
 import BaseCard from '@/components/UI/BaseCard.vue';
-import TheBadge from '@/components/TheBadge.vue';
-import TheButton from '@/components/TheButton.vue';
-import CoachCard from '@/components/coaches/CoachCard.vue';
-import BaseSpinner from '@/components/UI/BaseSpinner.vue';
 import { useToast } from 'vue-toastification';
+import { defineAsyncComponent } from 'vue';
 
 export default {
   name: 'CoachDetails',
   components: {
-    BaseSpinner,
-    CoachCard,
-    TheButton,
-    TheBadge,
+    BaseSpinner: defineAsyncComponent(() => import('@/components/UI/BaseSpinner.vue')),
+    CoachCard: defineAsyncComponent(() => import('@/components/coaches/CoachCard.vue')),
+    TheButton: defineAsyncComponent(() => import('@/components/TheButton.vue')),
+    TheBadge: defineAsyncComponent(() => import('@/components/TheBadge.vue')),
     BaseCard,
   },
   data() {

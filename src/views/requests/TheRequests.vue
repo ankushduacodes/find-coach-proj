@@ -13,11 +13,15 @@
 import { mapGetters } from 'vuex';
 import BaseCard from '@/components/UI/BaseCard.vue';
 import RequestList from '@/components/requests/RequestList.vue';
-import BaseSpinner from '@/components/UI/BaseSpinner.vue';
+import { defineAsyncComponent } from 'vue';
 
 export default {
   name: 'TheRequests',
-  components: { BaseSpinner, RequestList, BaseCard },
+  components: {
+    BaseSpinner: defineAsyncComponent(() => import('@/components/UI/BaseSpinner.vue')),
+    RequestList,
+    BaseCard,
+  },
   data() {
     return {
       isLoading: false,

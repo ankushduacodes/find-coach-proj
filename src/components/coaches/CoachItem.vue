@@ -1,7 +1,7 @@
 <template>
   <li>
     <h1>{{item.name}}</h1>
-    <h4>{{item.age}}</h4>
+    <h4>{{item.age}}/hr</h4>
     <template v-for="badge in item.expertise" :key="badge" class="cus">
       <the-badge :badge-name="badge"></the-badge>
     </template>

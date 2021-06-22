@@ -29,16 +29,15 @@
 
 <script>
 import BaseCard from '@/components/UI/BaseCard.vue';
-import TheBadge from '@/components/TheBadge.vue';
 import { useToast } from 'vue-toastification';
 import { mapGetters } from 'vuex';
-import BaseSpinner from '@/components/UI/BaseSpinner.vue';
+import { defineAsyncComponent } from 'vue';
 
 export default {
   name: 'CoachContact',
   components: {
-    BaseSpinner,
-    TheBadge,
+    BaseSpinner: defineAsyncComponent(() => import('@/components/UI/BaseSpinner.vue')),
+    TheBadge: defineAsyncComponent(() => import('@/components/TheBadge.vue')),
     BaseCard,
   },
   props: {
