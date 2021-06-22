@@ -1,4 +1,4 @@
-import { ADD_NEW_COACH, SET_COACHES } from '@/store/coaches/mutation-types';
+import { ADD_NEW_COACH, SET_COACHES, SET_TEMP_COACH } from '@/store/coaches/mutation-types';
 
 export default {
   [ADD_NEW_COACH](state, payload) {
@@ -7,5 +7,9 @@ export default {
   },
   [SET_COACHES](state, payload) {
     state.coachList = payload.coachList;
+  },
+
+  [SET_TEMP_COACH](state, payload) {
+    state.tempCoachObj = payload.coach;
   },
 };

@@ -9,6 +9,7 @@
 </template>
 
 <script>
+// TODO add filter coaches functionality
 import CoachList from '@/components/coaches/CoachList.vue';
 import BaseCard from '@/components/UI/BaseCard.vue';
 import { mapGetters } from 'vuex';
@@ -20,6 +21,7 @@ export default {
   data() {
     return {
       isLoading: false,
+      requestSent: false,
     };
   },
   computed: {
@@ -30,8 +32,9 @@ export default {
   async created() {
     // TODO handle error where if server error occurs then spinner should stop
     this.isLoading = true;
-    if (!this.$store.getters.['coaches/getAllCoaches'].length) {
+    if (!this.coachList.length && !this.requestSent) {
       await this.$store.dispatch('coaches/fetchCoaches');
+      this.requestSent = true;
     }
     this.isLoading = false;
   },

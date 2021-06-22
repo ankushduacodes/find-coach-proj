@@ -6,4 +6,7 @@ export default {
     const { coachList } = state;
     return coachList.find((coach) => coach.id === Number(payload.id));
   },
+  getTempCoach(state) {
+    return state.tempCoachObj;
+  },
 };

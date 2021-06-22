@@ -12,4 +12,5 @@ const app = createApp(App);
 app.use(store);
 app.use(router);
 app.use(Toast);
-router.isReady().then(() => app.mount('#app'));
+router.isReady()
+  .then(() => app.mount('#app'));

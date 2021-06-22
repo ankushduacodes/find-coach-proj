@@ -1,21 +1,25 @@
 <template>
   <base-card>
-    <div class="info">
-      <h1>{{ foundCoach.name }}</h1>
-      <template v-for="badge in foundCoach.expertise" :key="badge" class="cus">
-        <the-badge :badge-name="badge"></the-badge>
-      </template>
+    <base-spinner v-if="isLoading"></base-spinner>
+    <div v-else-if="!isLoading && Object.entries(foundCoach).length">
+      <div class="info">
+        <h1>{{ foundCoach.name }}</h1>
+        <template v-for="badge in foundCoach.expertise" :key="badge" class="cus">
+          <the-badge :badge-name="badge"></the-badge>
+        </template>
+      </div>
+      <ul>
+        <coach-card v-for="(value, key) in foundCoach.contactInfo" :key="value">
+          <li><b>{{ key.replace(key[0], key[0].toUpperCase()) }}</b>: {{ value }}</li>
+        </coach-card>
+      </ul>
+      <div class="contact-btn">
+        <router-link :to="ContactUrl">
+          <the-button :btn-class="'success'">Contact</the-button>
+        </router-link>
+      </div>
     </div>
-    <ul>
-      <coach-card v-for="(value, key) in foundCoach.contactInfo" :key="value">
-        <li><b>{{ key.replace(key[0], key[0].toUpperCase()) }}</b>: {{ value }}</li>
-      </coach-card>
-    </ul>
-    <div class="contact-btn">
-      <router-link :to="ContactUrl">
-        <the-button :btn-class="'success'">Contact</the-button>
-      </router-link>
-    </div>
+    <h1 v-else>Nothing to see</h1>
   </base-card>
 </template>
 
@@ -26,11 +30,25 @@ import BaseCard from '@/components/UI/BaseCard.vue';
 import TheBadge from '@/components/TheBadge.vue';
 import TheButton from '@/components/TheButton.vue';
 import CoachCard from '@/components/coaches/CoachCard.vue';
+import BaseSpinner from '@/components/UI/BaseSpinner.vue';
+import { useToast } from 'vue-toastification';
 
 export default {
   name: 'CoachDetails',
   components: {
-    CoachCard, TheButton, TheBadge, BaseCard,
+    BaseSpinner,
+    CoachCard,
+    TheButton,
+    TheBadge,
+    BaseCard,
+  },
+  data() {
+    return {
+      requestSent: false,
+      foundCoach: {},
+      // TODO add error handling with error message as well as a toast
+      isLoading: false,
+    };
   },
   props: {
     id: String,
@@ -40,13 +58,26 @@ export default {
       coachById: 'coaches/getCoachById',
     }),
 
-    foundCoach() {
-      return this.coachById({ id: this.id });
-    },
-
     ContactUrl() {
       return { name: 'CoachContact', params: { id: this.foundCoach.id } };
     },
+  },
+  async mounted() {
+    const coachId = this.id;
+    this.foundCoach = this.coachById({ id: this.id }) || this.$store.getters.['coaches/tempCoachObj'];
+    if (!this.foundCoach || !Object.entries(this.foundCoach).length) {
+      try {
+        this.isLoading = true;
+        await this.$store.dispatch('coaches/fetchCoachById', { coachId });
+        this.foundCoach = this.$store.getters.['coaches/getTempCoach'];
+      } catch (err) {
+        const toast = useToast();
+        toast.error('Something went wrong on the server');
+        this.foundCoach = {};
+      } finally {
+        this.isLoading = false;
+      }
+    }
   },
 };
 </script>
