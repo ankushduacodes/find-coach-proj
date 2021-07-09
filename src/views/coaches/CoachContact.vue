@@ -77,6 +77,7 @@ export default {
         await this.$router.push({ name: 'Requests' });
       } catch (err) {
         this.$refs.sendBtn.disabled = false;
+        // TODO give better error messages
         useToast().error('Something went wrong on the server, The request was not submitted successfully');
         console.log(err);
       }

@@ -179,6 +179,7 @@ export default {
       } catch (err) {
         this.$refs.sendBtn.disabled = false;
         console.log(err);
+        // TODO give better error messages
         useToast().error('Something went wrong. Please try again');
       }
     },
