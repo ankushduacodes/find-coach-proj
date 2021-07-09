@@ -2,8 +2,15 @@ import { useToast } from 'vue-toastification';
 import { api } from '@/api';
 
 export default {
-  addRequest({ commit }, payload) {
-    commit('ADD_NEW_REQUEST', payload);
+  async addRequest({ commit }, payload) {
+    let response;
+    try {
+      response = await api.post('/requests/add', payload);
+    } catch (err) {
+      console.log(err);
+      throw new Error('Something went wrong on the server, The request was not submitted successfully');
+    }
+    commit('ADD_NEW_REQUEST', { request: response.data.request });
   },
 
   async getAllRequests({ commit }) {

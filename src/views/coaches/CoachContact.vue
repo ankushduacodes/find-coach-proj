@@ -19,7 +19,7 @@
           <span class="invalid-feedback">Message box can not be empty</span>
         </div>
         <div class="flex-button">
-          <button type="submit" class="btn btn-primary">Send</button>
+          <button type="submit" class="btn btn-primary" ref="sendBtn">Send</button>
         </div>
       </form>
     </fieldset>
@@ -61,23 +61,25 @@ export default {
       message.value = '';
       name.value = '';
     },
-    addRequest() {
+    async addRequest() {
       // TODO send an add coach or coach request http request and on success
       // TODO on success get the latest added coach or request and update our local state with it
+      this.$refs.sendBtn.disabled = true;
       const payload = {
         id: Math.floor(Math.random() * 10000000000) + 100000,
         name: this.$refs.name.value.trim(),
         message: this.$refs.message.value.trim(),
-        to: this.id,
+        coachId: this.id,
       };
       try {
-        this.$store.dispatch('requests/addRequest', payload);
+        await this.$store.dispatch('requests/addRequest', payload);
         this.resetFormData();
         const toast = useToast();
         toast.success('Request Submitted Successfully');
-        this.$router.push({ name: 'Requests' });
+        await this.$router.push({ name: 'Requests' });
       } catch (err) {
-        // TODO add a toast on failure
+        this.$refs.sendBtn.disabled = false;
+        useToast().error('Something went wrong on the server, The request was not submitted successfully');
         console.log(err);
       }
     },
