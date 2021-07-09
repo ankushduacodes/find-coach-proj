@@ -98,7 +98,7 @@
           class="check-btn-feedback"
         >Please select at least one of the above options</span>
         <div class="flex-button">
-          <button @click="log" type="submit" class="btn btn-primary">Submit</button>
+          <button ref="sendBtn" type="submit" class="btn btn-primary">Submit</button>
         </div>
       </form>
     </fieldset>
@@ -159,43 +159,32 @@ export default {
         phoneNumber.classList.remove('is-invalid');
       }
     },
-    addCoach({
+    async addCoach({
       firstName, lastName, email, phoneNumber, age, expertise,
     }) {
       const payload = {
         id: Math.floor(Math.random() * 1000000000) + 1000,
         name: `${firstName.value.trim()} ${lastName.value.trim()}`,
         age: +age.value,
-        contactInfo: {
-          email: email.value.trim(),
-          phone: phoneNumber.value.trim(),
-        },
+        email: email.value.trim(),
+        phone: phoneNumber.value.trim(),
         expertise,
       };
       try {
-        this.$store.dispatch('coaches/addCoach', payload);
+        this.$refs.sendBtn.disabled = true;
+        await this.$store.dispatch('coaches/addCoach', payload);
         const toast = useToast();
         toast.success('Coach Registration Successful');
-        this.$router.push({ name: 'Coaches' });
-        this.resetInput();
+        await this.$router.push({ name: 'Coaches' });
       } catch (err) {
+        this.$refs.sendBtn.disabled = false;
         console.log(err);
+        useToast().error('Something went wrong. Please try again');
       }
     },
-    resetInput() {
-      const {
-        firstName, lastName, email, phoneNumber, age,
-      } = this.$refs;
-      firstName.value = '';
-      lastName.value = '';
-      email.value = '';
-      phoneNumber.value = '';
-      age.value = '';
-    },
-    // TODO add validations to the data being entered and data cannot be empty
     // TODO redirect on submit
     // TODO (use toast to inform that data was submitted and show a timer before redirecting)
-    validateData() {
+    async validateData() {
       const {
         firstName, lastName, email, phoneNumber, age,
       } = this.$refs;
@@ -207,7 +196,7 @@ export default {
       this.checkAge(age);
       this.expertiseErr = !this.expertise.length;
       if (!this.inputError && !this.expertiseErr) {
-        this.addCoach({
+        await this.addCoach({
           firstName, lastName, email, phoneNumber, age, expertise,
         });
       }

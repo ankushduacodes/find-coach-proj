@@ -11,14 +11,3 @@ export const api = axios.create({
   baseURL,
   headers,
 });
-
-function responseHandler(response) {
-  return response;
-}
-
-function errorHandler(err) {
-  console.log(err);
-  throw new Error('Something went wrong on the server');
-}
-
-api.interceptors.response.use(responseHandler, errorHandler);
