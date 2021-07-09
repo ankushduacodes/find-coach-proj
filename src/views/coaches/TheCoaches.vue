@@ -1,10 +1,11 @@
 <template>
   <base-card>
-    <base-spinner v-if="isLoading"></base-spinner>
+    <h1 v-if="errorOccurred">An error Occurred</h1>
+    <base-spinner v-else-if="isLoading"></base-spinner>
     <template v-else-if="coachList.length">
       <coach-list :coach-list="coachList"></coach-list>
     </template>
-    <h1 v-else>Nothing to see here</h1>
+    <h1 v-else>No Coaches were Found</h1>
   </base-card>
 </template>
 
@@ -14,6 +15,7 @@ import CoachList from '@/components/coaches/CoachList.vue';
 import BaseCard from '@/components/UI/BaseCard.vue';
 import { mapGetters } from 'vuex';
 import BaseSpinner from '@/components/UI/BaseSpinner.vue';
+import { useToast } from 'vue-toastification';
 
 export default {
   name: 'TheCoaches',
@@ -21,7 +23,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      requestSent: false,
+      errorOccurred: false,
     };
   },
   computed: {
@@ -31,12 +33,18 @@ export default {
   },
   async created() {
     // TODO handle error where if server error occurs then spinner should stop
-    this.isLoading = true;
-    if (!this.coachList.length && !this.requestSent) {
-      await this.$store.dispatch('coaches/fetchCoaches');
-      this.requestSent = true;
+    if (!this.coachList.length) {
+      try {
+        this.isLoading = true;
+        await this.$store.dispatch('coaches/fetchCoaches');
+      } catch (err) {
+        this.errorOccurred = true;
+        const toast = useToast();
+        toast.error('Something went wrong on the server');
+      } finally {
+        this.isLoading = false;
+      }
     }
-    this.isLoading = false;
   },
 };
 </script>

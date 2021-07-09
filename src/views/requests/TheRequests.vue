@@ -1,6 +1,7 @@
 <template>
   <base-card>
-    <base-spinner v-if="isLoading"></base-spinner>
+    <h1 v-if="errorOccurred">An Error Occurred</h1>
+    <base-spinner v-else-if="isLoading"></base-spinner>
     <template v-else-if="requests.length">
       <request-list :requests="requests"></request-list>
     </template>
@@ -14,6 +15,7 @@ import { mapGetters } from 'vuex';
 import BaseCard from '@/components/UI/BaseCard.vue';
 import RequestList from '@/components/requests/RequestList.vue';
 import { defineAsyncComponent } from 'vue';
+import { useToast } from 'vue-toastification';
 
 export default {
   name: 'TheRequests',
@@ -25,8 +27,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      requestSent: false,
-      coachRequestSent: false,
+      errorOccurred: false,
     };
   },
   computed: {
@@ -37,16 +38,20 @@ export default {
   },
   async created() {
     // TODO handle error where if server error occurs then spinner should stop
-    this.isLoading = true;
-    if (!this.requests.length && !this.requestSent) {
-      await this.$store.dispatch('requests/getAllRequests');
-      this.requestSent = true;
+    try {
+      this.isLoading = true;
+      if (!this.requests.length) {
+        await this.$store.dispatch('requests/getAllRequests');
+      }
+      if (!this.coachList.length) {
+        await this.$store.dispatch('coaches/fetchCoaches');
+      }
+    } catch (err) {
+      this.errorOccurred = true;
+      useToast().error('Something went wrong on the server');
+    } finally {
+      this.isLoading = false;
     }
-    if (!this.coachList.length && !this.coachRequestSent) {
-      await this.$store.dispatch('coaches/fetchCoaches');
-      this.coachRequestSent = true;
-    }
-    this.isLoading = false;
   },
 };
 </script>

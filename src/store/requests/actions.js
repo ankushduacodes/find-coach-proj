@@ -1,4 +1,3 @@
-import { useToast } from 'vue-toastification';
 import { api } from '@/api';
 
 export default {
@@ -19,7 +18,7 @@ export default {
       requests = await api.get('/requests');
     } catch (err) {
       console.log(err);
-      useToast().error('Something went wrong on the server');
+      throw new Error('Something went wrong on the server. Please try refreshing the page');
     }
     const payload = { requestList: requests.data.requestList };
     commit('SET_REQUESTS', payload);

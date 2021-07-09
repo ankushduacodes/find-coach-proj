@@ -1,7 +1,7 @@
 <template>
   <base-card>
     <base-spinner v-if="isLoading"></base-spinner>
-    <fieldset v-else-if="!isLoading && Object.keys(foundCoach).length">
+    <fieldset v-else-if="Object.keys(foundCoach).length">
       <legend><h2>Contact {{ foundCoach.name }}</h2></legend>
       <template v-for="badge in foundCoach.expertise" :key="badge" class="cus">
         <the-badge :badge-name="badge"></the-badge>
@@ -62,8 +62,6 @@ export default {
       name.value = '';
     },
     async addRequest() {
-      // TODO send an add coach or coach request http request and on success
-      // TODO on success get the latest added coach or request and update our local state with it
       this.$refs.sendBtn.disabled = true;
       const payload = {
         id: Math.floor(Math.random() * 10000000000) + 100000,

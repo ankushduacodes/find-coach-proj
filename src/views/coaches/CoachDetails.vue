@@ -42,7 +42,6 @@ export default {
   data() {
     return {
       foundCoach: {},
-      // TODO add error handling with error message as well as a toast
       isLoading: false,
     };
   },

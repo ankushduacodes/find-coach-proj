@@ -1,5 +1,4 @@
 import { api } from '@/api';
-import { useToast } from 'vue-toastification';
 
 export default {
   addCoach({ commit }, payload) {
@@ -11,9 +10,7 @@ export default {
     try {
       coaches = await api.get('/coaches');
     } catch (err) {
-      const toast = useToast();
-      toast.error('Something went wrong on the server');
-      console.log(Object.entries(err));
+      throw new Error('Something went wrong on the server');
     }
     const payload = { coachList: coaches.data.coachList };
     commit('SET_COACHES', payload);
