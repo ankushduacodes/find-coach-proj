@@ -37,13 +37,14 @@ export default {
     }),
   },
   async created() {
-    // TODO handle error where if server error occurs then spinner should stop
+    // TODO if I decide to add a delete route for the coach, Dont
+    // TODO (cont.) forget to handle deletion of requests belonging to deleted coaches
     try {
       this.isLoading = true;
-      if (!this.requests.length) {
+      if (!this.requests?.length) {
         await this.$store.dispatch('requests/getAllRequests');
       }
-      if (!this.coachList.length) {
+      if (!this.coachList?.length) {
         await this.$store.dispatch('coaches/fetchCoaches');
       }
     } catch (err) {

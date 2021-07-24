@@ -1,7 +1,11 @@
 import { api } from '@/api';
 
 export default {
-  async addCoach({ commit, dispatch, state }, payload) {
+  async addCoach({
+    commit,
+    dispatch,
+    state,
+  }, payload) {
     let response;
     try {
       response = await api.post('/coaches/add', payload);
@@ -11,8 +15,9 @@ export default {
     }
     if (!state.coachList.length) {
       await dispatch('fetchCoaches');
+    } else {
+      commit('ADD_NEW_COACH', { coach: response.data.coach });
     }
-    commit('ADD_NEW_COACH', { coach: response.data.coach });
   },
 
   async fetchCoaches({ commit }) {

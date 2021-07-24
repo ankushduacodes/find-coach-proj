@@ -183,8 +183,6 @@ export default {
         useToast().error('Something went wrong. Please try again');
       }
     },
-    // TODO redirect on submit
-    // TODO (use toast to inform that data was submitted and show a timer before redirecting)
     async validateData() {
       const {
         firstName, lastName, email, phoneNumber, age,

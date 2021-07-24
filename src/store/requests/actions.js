@@ -6,8 +6,7 @@ export default {
     try {
       response = await api.post('/requests/add', payload);
     } catch (err) {
-      console.log(err);
-      throw new Error('Something went wrong on the server, The request was not submitted successfully');
+      throw new Error(err.response.data.message);
     }
     commit('ADD_NEW_REQUEST', { request: response.data.request });
   },

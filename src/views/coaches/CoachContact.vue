@@ -78,8 +78,7 @@ export default {
       } catch (err) {
         this.$refs.sendBtn.disabled = false;
         // TODO give better error messages
-        useToast().error('Something went wrong on the server, The request was not submitted successfully');
-        console.log(err);
+        useToast().error(err.message);
       }
     },
     validateData() {
